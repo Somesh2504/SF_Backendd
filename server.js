@@ -115,6 +115,31 @@ app.get('/', (req, res) => {
 });
 
 // --------------------
+// VERIFY PHONE (from client after Firebase phone verification)
+// --------------------
+// Accepts: { phone: string, idToken?: string }
+// Note: For maximum security verify idToken server-side with Firebase Admin SDK.
+app.post('/verify_phone', (req, res) => {
+  const { phone, idToken } = req.body;
+  if (!phone) return res.status(400).json({ error: 'Phone missing' });
+
+  console.log('✅ Verified phone received:', phone);
+
+  // Optional: store in-memory or DB for later reference
+  // Example (in-memory, not persistent):
+  // if(!global.verifiedPhones) global.verifiedPhones = [];
+  // global.verifiedPhones.push(phone);
+
+  // If you want to verify idToken here, add Firebase Admin and verify the token:
+  // const admin = require('firebase-admin');
+  // admin.auth().verifyIdToken(idToken)
+  //   .then(decoded => res.json({ success: true, phone, uid: decoded.uid }))
+  //   .catch(err => res.status(401).json({ error: 'Invalid idToken' }));
+
+  res.json({ success: true, phone });
+});
+
+// --------------------
 // START SERVER
 // --------------------
 const PORT = process.env.PORT || 3000;
