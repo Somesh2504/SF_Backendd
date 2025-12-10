@@ -161,10 +161,10 @@ app.post('/payment_callback', express.urlencoded({ extended: false }), async (re
 
   // Redirect to success or fail page
   if (signatureMatch && paymentStatus === "captured") {
-    return res.redirect("https://studentforge.com/payment/success?order=" 
+    return res.redirect("http://127.0.0.1:5501/payment/success?order=" 
         + razorpay_order_id + "&amount=PAID");
   } else {
-    return res.redirect("https://studentforge.com/payment/failure");
+    return res.redirect("http://127.0.0.1:5501/payment/failure");
   }
 });
 
@@ -212,4 +212,5 @@ app.post('/verify_phone', (req, res) => {
 // --------------------
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
 
